@@ -1,9 +1,38 @@
 let currentDateTime = luxon.DateTime;
+let dateTime = currentDateTime.now();
 let container = [];
 
 // setting current date and time using Luxon
-let dateTime = currentDateTime.now();
 $("#currentDay").text(dateTime.toLocaleString(currentDateTime.DATETIME_FULL));
+
+// time storage
+let storage = {
+    '9': '',
+    '10': '',
+    '11': '',
+    '12': '',
+    '1': '',
+    '2': '',
+    '3': '',
+    '4': '',
+    '5': '',
+    '6': '',
+    '7': '',
+}
+if (JSON.parse(localStorage.getItem('event')) === null) {
+    localStorage.setItem('event', JSON.stringify(storage));
+} else {
+    storage = JSON.parse(localStorage.getItem('event'));
+}
+
+// saving events
+function storeText(event) {
+    let object = $(event.target);
+    object.siblings().eq(1).val();
+    storage[object.attr("id")] = object.siblings().eq(1).val();
+    localStorage.setItem("event", JSON.stringify(storage));
+    return;
+}
 
 // setting color to saved events
 for (i in container) {
